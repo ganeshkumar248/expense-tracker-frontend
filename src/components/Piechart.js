@@ -24,7 +24,7 @@ const Piechart = () => {
       <div className=" col col-md col-sm">
         <h5>budget</h5>
         <p class="amount">
-          $ <span id="budgetAmount">0</span>
+          ₹ <span id="budgetAmount">0</span>
         </p>
       </div>
       <div>
@@ -39,7 +39,7 @@ const Piechart = () => {
       <div>
         <h5>balance</h5>
         <p class="amount">
-          $ <span id="budgetAmount">0</span>
+          ₹ <span id="budgetAmount">0</span>
         </p>
       </div>
     </div>
