@@ -4,14 +4,11 @@ const Sidebar = () => {
   return (
     <div>
       <div class="sidebar">
-        <Link to="/" className="active">
-          {/* <FontAwesomeIcon icon={faHome} style={{ color: "red" }} /> */}
+        <Link to="/expenses" className="active">
           &nbsp;Home
         </Link>
-        <Link to="/about">
-          {/* <FontAwesomeIcon icon={faHome} style={{ color: "red" }} /> */}
-          About
-        </Link>
+        <Link to="/expensecategories">Categories</Link>
+        <Link to="/about">About</Link>
       </div>
     </div>
   );

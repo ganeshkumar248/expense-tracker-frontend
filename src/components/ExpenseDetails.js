@@ -39,49 +39,62 @@ const ExpenseDetails = () => {
       {currentExpense && (
         <div>
           <h3>Expense Details</h3>
+          <hr />
           <h5 className="text-primary">
             <strong>
               <span className="text-primary">Expense Name: </span>
             </strong>
-            {currentExpense.expenseName}
+            <span className="text-danger">{currentExpense.expenseName}</span>
           </h5>
           <p>
             <strong>
-              <span>Amount: </span>
+              <span className="text-primary">Amount: </span>
             </strong>
-            {currencyFormatter.format(currentExpense.amount, {
-              locale: "IN",
-            })}
+            <span className="text-danger">
+              {currencyFormatter.format(currentExpense.amount, {
+                locale: "IN",
+              })}
+            </span>
           </p>
           <p>
             <strong>
-              <span>Category: </span>
+              <span className="text-primary">Category: </span>
             </strong>
-            {currentExpense.category}
+            <span className="text-danger">{currentExpense.category}</span>
           </p>
           <p>
             <strong>
-              <span>Description: </span>
+              <span className="text-primary">Description: </span>
             </strong>
-            {currentExpense.description}
+            <span className="text-danger">{currentExpense.description}</span>
           </p>
           <p>
             <strong>
-              <span>Actual Date: </span>
+              <span className="text-primary">Actual Date: </span>
             </strong>
-            {moment(currentExpense.date).local().format("YYYY-MM-DD")}
+            <span className="text-danger">
+              {moment(currentExpense.date).local().format("YYYY-MM-DD hh:mm A")}
+            </span>
           </p>
           <p>
             <strong>
-              <span>Created Date: </span>
+              <span className="text-primary">Created Date: </span>
             </strong>
-            {moment(currentExpense.createdAt).local().format("YYYY-MM-DD")}
+            <span className="text-danger">
+              {moment(currentExpense.createdAt)
+                .local()
+                .format("YYYY-MM-DD hh:mm A")}
+            </span>
           </p>
           <p>
             <strong>
-              <span>Last Updated Date: </span>
+              <span className="text-primary">Last Updated Date: </span>
             </strong>
-            {moment(currentExpense.updatedAt).local().format("YYYY-MM-DD")}
+            <span className="text-danger">
+              {moment(currentExpense.updatedAt)
+                .local()
+                .format("YYYY-MM-DD hh:mm A")}
+            </span>
           </p>
 
           <button onClick={handleEdit}>Edit</button>

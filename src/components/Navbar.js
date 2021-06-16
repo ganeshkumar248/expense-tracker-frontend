@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import ExpenseService from "../services/ExpenseService";
+// import { useEffect, useState } from "react";
+// import { Link } from "react-router-dom";
+// import ExpenseService from "../services/ExpenseService";
 
 const Navbar = () => {
-  const [expenses, setExpenses] = useState([]);
-  var currencyFormatter = require("currency-formatter");
+  // const [expenses, setExpenses] = useState([]);
+  // var currencyFormatter = require("currency-formatter");
 
-  const totalExpense = () => {
-    return expenses.reduce((amount, expense) => amount + expense.amount, 0);
-  };
+  // const totalExpense = () => {
+  //   return expenses.reduce((amount, expense) => amount + expense.amount, 0);
+  // };
 
-  useEffect(() => {
-    ExpenseService.getAll()
-      .then((response) => {
-        console.log("printing resposne", response.data);
-        setExpenses(response.data);
-      })
-      .catch((error) => {
-        console.log("something went wrong", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   ExpenseService.getAll()
+  //     .then((response) => {
+  //       console.log("printing resposne", response.data);
+  //       setExpenses(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log("something went wrong", error);
+  //     });
+  // }, []);
 
   return (
     <nav className="navbar">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory, useParams } from "react-router";
+import ExpenseCategoryService from "../services/ExpenseCategoryService";
 import ExpenseService from "../services/ExpenseService";
 
 const AddExpense = () => {
@@ -13,8 +14,9 @@ const AddExpense = () => {
   const [errors, setErrors] = useState(false);
   const history = useHistory();
   const { id } = useParams();
+  const [categories, setCategories] = useState([]);
 
-  const saveNote = (e) => {
+  const saveExpense = (e) => {
     e.preventDefault();
     if (!expenseName || !date || !amount || !category) {
       setErrors(true);
@@ -26,7 +28,7 @@ const AddExpense = () => {
       ExpenseService.update(newExpense)
         .then((response) => {
           console.log("Expense updated successfully", response.data);
-          history.push("/");
+          history.push("/expenses");
         })
         .catch((error) => {
           console.log("Something went wrong", error);
@@ -43,6 +45,16 @@ const AddExpense = () => {
         });
     }
   };
+
+  useEffect(() => {
+    ExpenseCategoryService.getAll()
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.log("something went wrong", error);
+      });
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -114,12 +126,11 @@ const AddExpense = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="Home">Home</option>
-            <option value="Food">Food</option>
-            <option value="Bills">Bills</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Health">Health</option>
-            <option value="Transpotation">Transpotation</option>
+            {categories.map((category) => (
+              <option key={category.value} value={category.value}>
+                {category.categoryName}
+              </option>
+            ))}
           </select>
         </div>
         <div className="form-group">
@@ -144,7 +155,7 @@ const AddExpense = () => {
           ></textarea>
         </div>
         <div className="text-center">
-          <button onClick={(e) => saveNote(e)}>
+          <button onClick={(e) => saveExpense(e)}>
             {id ? "Update Expense" : "Add Expense"}
           </button>
         </div>

@@ -21,14 +21,14 @@ const Piechart = () => {
 
   return (
     <div className="budget">
-      <div className=" col col-md col-sm">
-        <h5>budget</h5>
+      <div>
+        <h5>Budget</h5>
         <p class="amount">
           ₹ <span id="budgetAmount">0</span>
         </p>
       </div>
       <div>
-        <h5>expenses</h5>
+        <h5>Expenses</h5>
         <p>
           {" "}
           {currencyFormatter.format(totalExpense(), {
@@ -37,8 +37,8 @@ const Piechart = () => {
         </p>
       </div>
       <div>
-        <h5>balance</h5>
-        <p class="amount">
+        <h5>Balance</h5>
+        <p>
           ₹ <span id="budgetAmount">0</span>
         </p>
       </div>
