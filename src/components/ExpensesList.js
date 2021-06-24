@@ -24,8 +24,8 @@ const ExpensesList = () => {
 
   return (
     <div className="main-content">
-      <Piechart />
-      <hr />
+      {/* <Piechart /> */}
+      {/* <hr /> */}
       <h4>
         List of Expenses
         <Link to="/addexpense" className="float-right small">
