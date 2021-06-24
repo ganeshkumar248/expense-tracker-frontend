@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory, useParams } from "react-router";
+import AuthService from "../services/AuthService";
 import ExpenseCategoryService from "../services/ExpenseCategoryService";
-import ExpenseService from "../services/ExpenseService";
+// import ExpenseService from "../services/ExpenseService";
 
 const AddCategory = () => {
   const [categoryName, setCategoryName] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState(false);
   const history = useHistory();
+  const [userId, setUserId] = useState("");
   const { id } = useParams();
+
+  useEffect(() => {
+    const currentUser = AuthService.getCurrentUser();
+    setUserId(currentUser.id);
+  });
 
   const saveCategory = (e) => {
     e.preventDefault();
@@ -18,7 +25,7 @@ const AddCategory = () => {
       setErrors(true);
       return;
     }
-    const newCategory = { categoryName, description, id };
+    const newCategory = { categoryName, description, id, userId };
     if (id) {
       //call the service update method
       ExpenseCategoryService.update(newCategory)
@@ -48,6 +55,7 @@ const AddCategory = () => {
         .then((category) => {
           setCategoryName(category.data.categoryName);
           setDescription(category.data.description);
+          // setUserId(category.data.userId);
         })
         .catch((error) => {
           console.log("Something went wrong", error);
@@ -86,6 +94,14 @@ const AddCategory = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
+        </div>
+        <div>
+          <input
+            type="hidden"
+            id="user"
+            className="form-control"
+            value={userId}
+          />
         </div>
         <div className="text-center">
           <button onClick={(e) => saveCategory(e)}>

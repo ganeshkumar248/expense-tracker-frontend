@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory, useParams } from "react-router";
+import AuthService from "../services/AuthService";
 import ExpenseCategoryService from "../services/ExpenseCategoryService";
 import ExpenseService from "../services/ExpenseService";
 
@@ -9,12 +10,18 @@ const AddExpense = () => {
   const [expenseName, setExpenseName] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("Home");
+  const [userId, setUserId] = useState("");
+  const [category, setCategory] = useState("Bills");
   const [date, setDate] = useState(new Date());
   const [errors, setErrors] = useState(false);
   const history = useHistory();
   const { id } = useParams();
   const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const currentUser = AuthService.getCurrentUser();
+    setUserId(currentUser.id);
+  });
 
   const saveExpense = (e) => {
     e.preventDefault();
@@ -22,7 +29,16 @@ const AddExpense = () => {
       setErrors(true);
       return;
     }
-    const newExpense = { expenseName, category, date, amount, description, id };
+
+    const newExpense = {
+      expenseName,
+      category,
+      date,
+      amount,
+      description,
+      id,
+      userId,
+    };
     if (id) {
       //call the service update method
       ExpenseService.update(newExpense)
@@ -38,7 +54,7 @@ const AddExpense = () => {
       ExpenseService.create(newExpense)
         .then((response) => {
           console.log("Expense added successfully", response.data);
-          history.push("/");
+          history.push("/expenses");
         })
         .catch((error) => {
           console.log("something went wroing", error);
@@ -47,7 +63,7 @@ const AddExpense = () => {
   };
 
   useEffect(() => {
-    ExpenseCategoryService.getAll()
+    ExpenseCategoryService.getAll(AuthService.getCurrentUser().id)
       .then((response) => {
         setCategories(response.data);
       })
@@ -65,6 +81,7 @@ const AddExpense = () => {
           setAmount(expense.data.amount);
           setCategory(expense.data.category);
           setDate(new Date(expense.data.date));
+          setUserId(expense.data.userId);
         })
         .catch((error) => {
           console.log("Something went wrong", error);
@@ -153,6 +170,14 @@ const AddExpense = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
+        </div>
+        <div>
+          <input
+            type="hidden"
+            id="user"
+            className="form-control"
+            value={userId}
+          />
         </div>
         <div className="text-center">
           <button onClick={(e) => saveExpense(e)}>

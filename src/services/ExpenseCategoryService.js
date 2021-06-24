@@ -1,7 +1,7 @@
 import httpClient from "../http-common";
 
-const getAll = () => {
-  return httpClient.get("/expense-categories");
+const getAll = (id) => {
+  return httpClient.get(`/expense-categories?userId=${id}`);
 };
 
 const create = (data) => {

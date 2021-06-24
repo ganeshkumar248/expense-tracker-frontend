@@ -23,7 +23,8 @@ const ExpenseDetails = () => {
   const handleDelete = () => {
     ExpenseService.remove(id)
       .then((response) => {
-        history.push("/");
+        console.log("expense deleted successfully", response.data);
+        history.push("/expenses");
       })
       .catch((error) => {
         console.log("Something went wrong", error);
@@ -31,7 +32,7 @@ const ExpenseDetails = () => {
   };
 
   const handleEdit = () => {
-    history.push(`/expenses/edit/${id}`);
+    history.push(`/expenseupdate/${id}`);
   };
 
   return (

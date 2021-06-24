@@ -21,6 +21,7 @@ const ExpenseCategoryDetails = () => {
   const handleDelete = () => {
     ExpenseCategoryService.remove(id)
       .then((response) => {
+        console.log("Category deleted successfully", response.data);
         history.push("/expensecategories");
       })
       .catch((error) => {

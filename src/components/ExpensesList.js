@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 // import Moment from "react-moment";
 import { Link } from "react-router-dom";
+import AuthService from "../services/AuthService";
 import ExpenseService from "../services/ExpenseService";
 import Piechart from "./Piechart";
 
@@ -8,9 +9,10 @@ const ExpensesList = () => {
   const [expenses, setExpenses] = useState([]);
 
   var currencyFormatter = require("currency-formatter");
+  const currentUser = AuthService.getCurrentUser();
 
   useEffect(() => {
-    ExpenseService.getAll()
+    ExpenseService.getAll(currentUser.id)
       .then((response) => {
         console.log("printing resposne", response.data);
         setExpenses(response.data);
@@ -25,16 +27,16 @@ const ExpensesList = () => {
       <Piechart />
       <hr />
       <h4>
-        List of Expenses{" "}
-        <Link to="/add" className="float-right small">
-          +New Expense
+        List of Expenses
+        <Link to="/addexpense" className="float-right small">
+          + New Expense
         </Link>
       </h4>
       <div className="notes-list mt-4">
         {expenses.length > 0 ? (
           expenses.map((expense) => (
             <div key={expense.id} className="notes-preview mt-3">
-              <Link to={`/expenses/${expense.id}`}>
+              <Link to={`/expensedetails/${expense.id}`}>
                 <h5 className="primary-color">
                   {expense.expenseName}
                   <span>
