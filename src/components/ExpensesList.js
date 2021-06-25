@@ -7,14 +7,14 @@ import Piechart from "./Piechart";
 
 const ExpensesList = () => {
   const [expenses, setExpenses] = useState([]);
-
   var currencyFormatter = require("currency-formatter");
+
   const currentUser = AuthService.getCurrentUser();
 
   useEffect(() => {
     ExpenseService.getAll(currentUser.id)
       .then((response) => {
-        console.log("printing resposne", response.data);
+        console.log("expenses", response.data);
         setExpenses(response.data);
       })
       .catch((error) => {
@@ -24,8 +24,8 @@ const ExpensesList = () => {
 
   return (
     <div className="main-content">
-      {/* <Piechart /> */}
-      {/* <hr /> */}
+      <Piechart />
+      <hr />
       <h4>
         List of Expenses
         <Link to="/addexpense" className="float-right small">
