@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const API_URL = "http://localhost:2480/api/auth/";
-const API_URL = "https://expense-tracker-frontend-gana.herokuapp.com/api/auth/";
+const API_URL = "https://expense-tracker-backend-gana.herokuapp.com/api/auth/";
 
 const register = (username, email, password) => {
   return axios.post(API_URL + "signup", {
