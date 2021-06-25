@@ -89,7 +89,8 @@ const App = () => {
             </nav>
             <div>
               <Switch>
-                <Route exact path={("/", "/login")} component={Login} />
+                <Route exact path={"/"} component={Login} />
+                <Route exact path={"/login"} component={Login} />
                 <Route path="/register" component={Register} />
                 <Route path="/profile" component={Profile} />
                 <Route path={"/expenses"} component={ExpensesList} />

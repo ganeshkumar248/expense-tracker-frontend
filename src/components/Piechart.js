@@ -9,17 +9,27 @@ const Piechart = () => {
     return expenses.reduce((amount, expense) => amount + expense.amount, 0);
   };
 
+  const [currentUser, setCurrentUser] = useState(undefined);
+
   useEffect(() => {
-    const currentUser = AuthService.getCurrentUser();
-    ExpenseService.getAll(currentUser.id)
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+      sumOfTotalExpense(user.id);
+    }
+  }, []);
+
+  const sumOfTotalExpense = (id) => {
+    ExpenseService.getAll(id)
       .then((response) => {
-        console.log("printing resposne", response.data);
+        console.log("expenses", response.data);
         setExpenses(response.data);
       })
       .catch((error) => {
         console.log("something went wrong", error);
       });
-  }, []);
+  };
 
   return (
     <div className="budget">

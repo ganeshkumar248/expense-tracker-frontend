@@ -9,10 +9,19 @@ const ExpensesList = () => {
   const [expenses, setExpenses] = useState([]);
   var currencyFormatter = require("currency-formatter");
 
-  const currentUser = AuthService.getCurrentUser();
+  const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
-    ExpenseService.getAll(currentUser.id)
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+      getUserList(user.id);
+    }
+  }, []);
+
+  const getUserList = (id) => {
+    ExpenseService.getAll(id)
       .then((response) => {
         console.log("expenses", response.data);
         setExpenses(response.data);
@@ -20,7 +29,7 @@ const ExpensesList = () => {
       .catch((error) => {
         console.log("something went wrong", error);
       });
-  }, []);
+  };
 
   return (
     <div className="main-content">
